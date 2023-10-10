@@ -1,5 +1,7 @@
 "use client";
 
+import axios from 'axios'
+
 import React, { useState, useEffect } from "react";
 import "./NewAppointmentModal.css";
 import { generateCheckInNumber, generatePurchaseOrderNumber } from "../utils";
@@ -7,8 +9,37 @@ import { generateCheckInNumber, generatePurchaseOrderNumber } from "../utils";
 const NewAppointmentModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [form, setForm] = useState({
+    driverName: "",
+    driverPhoneNumber: "",
+    trailerNumber: "",
+    bookerName: "",
+    bookerPhoneNumber: "",
+    bookerEmailAddress: "",
+    carrier: "",
+    purchaseOrderNumber: "",
+    appointmentTime: "",
+    weight: "",
+    destination: "",
+  });
+
   const handleClose = () => {
     setModalVisible(false);
+  };
+
+  const handleSubmit = async () => {
+    let response = await axios.post("http://localhost:5000/api/new-appointment", form);
+    console.log(response)
+  }
+
+  
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   useEffect(() => {
@@ -53,13 +84,19 @@ const NewAppointmentModal = () => {
                 <input
                   className="text-starfield2 mt-2 border p-2 w-full rounded"
                   type="text"
+                  name="driverName"
+                  value={form.driverName}
+                  onChange={handleInputChange}
                 />
               </label>
               <label className="block text-starfield4 font-bold">
-               Driver Phone Number
+                Driver Phone Number
                 <input
                   className="mt-2 border text-starfield2 p-2 w-full rounded"
                   type="tel"
+                  name="driverPhoneNumber" 
+                  value={form.driverPhoneNumber}
+                  onChange={handleInputChange}
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -67,6 +104,20 @@ const NewAppointmentModal = () => {
                 <input
                   className="text-starfield2 mt-2 border p-2 w-full rounded"
                   type="text"
+                  name="trailerNumber"
+                  value={form.trailerNumber}
+                  onChange={handleInputChange}
+
+                />
+              </label>
+              <label className="block text-starfield4 font-bold">
+                Destination
+                <input
+                  className="text-starfield2 mt-2 border p-2 w-full rounded"
+                  type="text"
+                  name="destination"
+                  value={form.destination}
+                  onChange={handleInputChange}
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -74,13 +125,21 @@ const NewAppointmentModal = () => {
                 <input
                   className="text-starfield2 mt-2 border p-2 w-full rounded"
                   type="text"
+                  name="bookerName"
+                  value={form.bookerName}
+                  onChange={handleInputChange}
+                  
                 />
               </label>
               <label className="block text-starfield4 font-bold">
-               Booker Phone Number
+                Booker Phone Number
                 <input
                   className="mt-2 border text-starfield2 p-2 w-full rounded"
                   type="tel"
+                  name="bookerPhoneNumber"
+                  value={form.bookerPhoneNumber}
+                  onChange={handleInputChange}
+
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -88,6 +147,10 @@ const NewAppointmentModal = () => {
                 <input
                   className="text-starfield2 mt-2 border p-2 w-full rounded"
                   type="email"
+                  name="bookerEmailAddress"
+                  value={form.bookerEmailAddress}
+                  onChange={handleInputChange}
+
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -95,6 +158,10 @@ const NewAppointmentModal = () => {
                 <input
                   className="mt-2 border text-starfield2 p-2 w-full rounded"
                   type="text"
+                  name="carrier"
+                  value={form.carrier}
+                  onChange={handleInputChange}
+
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -102,8 +169,10 @@ const NewAppointmentModal = () => {
                 <input
                   className="mt-2 border p-2 w-full text-purple-100 rounded"
                   type="text"
-                  
-                  
+                  name="purchaseOrderNumber"
+                  value={form.purchaseOrderNumber}
+                  onChange={handleInputChange}
+
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -111,14 +180,22 @@ const NewAppointmentModal = () => {
                 <input
                   className="mt-2 border p-2 w-full rounded"
                   type="datetime-local"
+                  name="appointmentTime"
+                  value={form.appointmentTime}
+                  onChange={handleInputChange}
+
                 />
               </label>
-              
+
               <label className="block text-starfield4 font-bold">
                 Weight
                 <input
                   className="mt-2 border p-2 w-full rounded text-starfield2s"
                   type="number"
+                  name="weight"
+                  value={form.weight}
+                  onChange={handleInputChange}
+
                 />
               </label>
             </div>
@@ -130,7 +207,7 @@ const NewAppointmentModal = () => {
               >
                 Cancel
               </button>
-              <button className="bg-starfield1 text-starfield5 hover:bg-starfield4 px-6 py-2 rounded">
+              <button className="bg-starfield1 text-starfield5 hover:bg-starfield4 px-6 py-2 rounded" onClick={handleSubmit}>
                 Submit
               </button>
             </div>

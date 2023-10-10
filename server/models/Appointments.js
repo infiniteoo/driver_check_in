@@ -5,7 +5,7 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  driverNumber: {
+  driverPhoneNumber: {
     type: String,
     required: true,
   },
@@ -22,16 +22,21 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bookerEmail: {
+  bookerEmailAddress: {
     type: String,
     required: true,
   },
+  destination: {
+    type: String,
+    required: true,
+  },
+  
 
   carrier: {
     type: String,
     required: true,
   },
-  poNumber: {
+  purchaseOrderNumber: {
     type: String,
     required: true,
   },
@@ -45,23 +50,22 @@ const appointmentSchema = new mongoose.Schema({
   },
   checkInTime: {
     type: Date,
-    required: true,
+   
   },
   checkOutTime: {
     type: Date,
-    required: true,
+   
   },
   weight: {
     type: String,
     required: true,
   },
   assignedDoor: {
-    type: String,
-    required: true,
+    type: String
   },
   loaderName: {
     type: String,
-    required: true,
+    
   },
   status: {
     type: String,

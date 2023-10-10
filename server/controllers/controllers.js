@@ -1,14 +1,48 @@
 // Import any necessary modules
-const { response } = require('express');
+const { response } = require("express");
+const Appointment = require("../models/Appointments");
+const { generateCheckInNumber } = require("../../utils/");
 
 // Define your controller functions
 const getAppointments = async (req, res) => {
-    res.send('Welcome to my Express server!');
+  res.send("Welcome to my Express server!");
 };
 
+const createAppointment = async (req, res) => {
+  try {
+    let checkInNumber;
+    let isUnique = false;
+    
+    // Keep generating a checkInNumber until a unique one is found
+    while (!isUnique) {
+      checkInNumber = generateCheckInNumber();
+      const existingAppointment = await Appointment.findOne({ checkInNumber });
+
+      if (!existingAppointment) {
+        isUnique = true;
+      }
+    }
+
+    const appointment = new Appointment(req.body);
+
+    appointment.checkInNumber = checkInNumber;
+    appointment.status = "scheduled";
+    appointment.checkInTime = null;
+    appointment.checkOutTime = null;
+    appointment.assignedDoor = null;
+    appointment.loaderName = null;
+    
+
+    await appointment.save();
+    res.status(201).send(appointment);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
 
 
 // Export your controller functions
 module.exports = {
-    getAppointments
+  getAppointments,
+  createAppointment,
 };
