@@ -1,15 +1,13 @@
-import React from "react";
-import NewAppointmentButton from "./NewAppointmentButton";
 import NewAppointmentModal from "./NewAppointmentModal";
+import AppointmentContainer from "./AppointmentContainer";
 
-const Viewport = ({data}) => {
+const Viewport = ({ data }) => {
   return (
     <>
-      {" "}
-      {/* <NewAppointmentButton data={data} /> */}
-      <NewAppointmentModal data={data} />
+      {data && <AppointmentContainer data={data} />}
+      <NewAppointmentModal />
     </>
-  );    
+  );
 };
 
 export default Viewport;

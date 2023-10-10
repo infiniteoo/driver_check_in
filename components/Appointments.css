@@ -1,0 +1,63 @@
+.appointments-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: white;  /* Adding the custom background color */
+    padding: 20px;  /* Padding around the entire container */
+    margin: 20px auto;  /* Margin to push it away from the screen edges */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Optional: adds a subtle shadow for depth */
+    border-radius: 8px;  /* Optional: rounds the corners of the container */
+}
+
+.headers {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: black;  /* Adding a custom text color */
+    border-bottom: 2px solid black;  /* Custom color for the border */
+    padding-bottom: 10px;  /* Padding to give space between headers and border */
+}
+
+.appointment-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;  /* Custom color for the border */
+    color: text-starfield3;  /* Custom text color for the appointment data */
+}
+
+.appointment-row:hover {
+    background-color: blueviolet;  /* Custom hover color */
+}
+
+/* Each cell gets padding for spacing */
+.appointment-row > div, .headers > div {
+    padding: 10px 15px;
+}
+
+
+.headers, .appointment-row {
+    display: flex;
+    flex-wrap: wrap;  /* Allow the content to wrap onto the next line */
+    align-items: center;
+}
+
+.headers > div, .appointment-row > div {
+    padding: 10px 15px;  
+    flex-basis: calc(100% / 12);  /* Divide the row into 12 equal parts */
+    box-sizing: border-box;  /* Ensure padding is included in the width */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .headers > div, .appointment-row > div {
+        padding: 8px 12px;
+        font-size: 0.9rem;  /* Reduce font size */
+    }
+}
+
+/* Media Query for even smaller screens */
+@media (max-width: 480px) {
+    .headers > div, .appointment-row > div {
+        padding: 6px 10px;
+        font-size: 0.8rem;  /* Further reduce font size */
+    }
+}

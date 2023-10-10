@@ -5,7 +5,12 @@ const { generateCheckInNumber } = require("../../utils/");
 
 // Define your controller functions
 const getAppointments = async (req, res) => {
-  res.send("Welcome to my Express server!");
+  try {
+    const appointments = await Appointment.find();
+    res.status(200).send(appointments);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 };
 
 const createAppointment = async (req, res) => {
