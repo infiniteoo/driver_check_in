@@ -1,14 +1,16 @@
-import axios from 'axios'
+import axios from "axios";
+import NewAppointmentButton from "../components/NewAppointmentButton";
 
 export default async function Home() {
+  const { data } = await axios.get("http://localhost:5000/api/");
 
-  const response = await axios.get('http://localhost:5000/api/')
+  console.log(data);
 
-  console.log(response.data)
-  
+
+
   return (
-   <>
-    <h1>Home</h1>
-   </>
-  )
+    <>
+      <NewAppointmentButton data={data} />
+    </>
+  );
 }
