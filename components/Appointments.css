@@ -25,7 +25,7 @@
 }
 
 .appointment-row:hover {
-    background-color: blueviolet;  /* Custom hover color */
+    background-color: whitesmoke;  /* Custom hover color */
 }
 
 /* Each cell gets padding for spacing */
