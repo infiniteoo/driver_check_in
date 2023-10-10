@@ -1,0 +1,32 @@
+{
+  "name": "nextjs_ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "server": "nodemon server/server.js",
+    "client": "npm run dev",
+    "dev": "concurrently \"cd server && nodemon server.js\" \"next dev\""
+  },
+  "dependencies": {
+    "axios": "^1.5.1",
+    "concurrently": "^8.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.6.1",
+    "next": "13.5.4",
+    "nodemon": "^3.0.1",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.4",
+    "postcss": "^8",
+    "tailwindcss": "^3"
+  }
+}
