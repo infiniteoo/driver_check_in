@@ -10,7 +10,7 @@ const generatePurchaseOrderNumber = () => {
   return Math.floor(1000000000 + Math.random() * 9000000000).toString();
 };
 
-export function generateAppointmentData(appointment) {
+function generateAppointmentData(appointment) {
   return [
     { label: "Driver Name", value: appointment.driverName },
     { label: "Driver Phone", value: appointment.driverPhoneNumber },

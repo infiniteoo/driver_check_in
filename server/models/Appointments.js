@@ -66,11 +66,11 @@ const appointmentSchema = new mongoose.Schema({
   loaderName: {
     type: String,
     
-  },
+  },  
   status: {
     type: String,
-    enum: ["Scheduled", "Checked in", "Loading", "Completed"],
-    default: "scheduled",
+    enum: ["Scheduled", "Checked In", "Loading", "Completed", "Canceled"],
+    default: "Scheduled",
   },
 });
 
