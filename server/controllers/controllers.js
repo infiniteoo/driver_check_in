@@ -13,6 +13,23 @@ const getAppointments = async (req, res) => {
   }
 };
 
+const updateAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { loaderName } = req.body;
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      id,
+      {  loaderName },
+      { new: true }
+    );
+
+    res.status(200).send(appointment);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+
 const createAppointment = async (req, res) => {
   try {
     let checkInNumber;
@@ -50,4 +67,5 @@ const createAppointment = async (req, res) => {
 module.exports = {
   getAppointments,
   createAppointment,
+  updateAppointment
 };

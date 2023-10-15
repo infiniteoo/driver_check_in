@@ -9,5 +9,10 @@ const routeController =  require('../controllers/controllers.js');
 router.get("/", routeController.getAppointments);
 
 router.post("/new-appointment", routeController.createAppointment);
+
+router.put("/appointments/:id", routeController.updateAppointment);
+
 // Export router
 module.exports = router;
+
+
