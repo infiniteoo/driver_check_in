@@ -1,11 +1,14 @@
-"use client"
+"use client";
+
 import React, { useState } from "react";
 import { OPERATORS } from "../constants";
 import axios from "axios";
-import { generateAppointmentData } from '../utils';
+import { generateAppointmentData } from "../utils";
 
 const AppointmentRow = ({ appointment }) => {
-  const [selectedAssignees, setSelectedAssignees] = useState({ [appointment._id]: '' }); // Initialize with an empty string for the specific appointment
+  const [selectedAssignees, setSelectedAssignees] = useState({
+    [appointment._id]: "",
+  });
 
   const handleAssignChange = (event) => {
     const newSelectedAssignees = { ...selectedAssignees };
@@ -27,25 +30,33 @@ const AppointmentRow = ({ appointment }) => {
   const data = generateAppointmentData(appointment);
 
   return (
-    <div className="appointment-row flex flex-col border-2 border-starfield1">
+    <div className="appointment-row flex flex-col border-2 border-starfield1 rounded p-4 my-4">
       <div className="flex flex-row flex-wrap justify-between">
         {data.map((item, index) => (
           <div
             key={index}
-            className="border border-starfield1 border-3 flex-wrap flex justify-around text-starfield4"
+            className="border border-starfield1 bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2"
           >
-            <div className="p-2 flex-1">{item.label}</div>
-            <div className="p-2 flex-1">{item.value}</div>
+            <div className="font-semibold">{item.label}:&nbsp;</div>
+            {"  "}
+            <div className="font-bold text-starfield3">{item.value}</div>
           </div>
         ))}
+        <div className="border border-starfield1 bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2">
+          <div className="font-semibold">Loader:&nbsp;</div>
+          <div className="font-bold text-starfield3">
+            {appointment.loaderName}
+          </div>
+        </div>
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row items-center my-4">
         {appointment.status !== "Complete" ? (
           <>
             <select
-              className="p-2"
-              value={selectedAssignees[appointment._id]} // Use the selectedAssignee for this appointment
-              onChange={handleAssignChange} // No need to pass the index
+              className="p-2 bg-white rounded border border-starfield1" // Added border styling
+              value={selectedAssignees[appointment._id]}
+              onChange={handleAssignChange}
+              style={{ height: "2.5rem" }} // Adjust the height to match the buttons
             >
               <option value="">Select Assignee</option>
               {OPERATORS.map((operator, operatorIndex) => (
@@ -74,4 +85,3 @@ const AppointmentRow = ({ appointment }) => {
 };
 
 export default AppointmentRow;
-
