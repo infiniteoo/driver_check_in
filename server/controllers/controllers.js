@@ -13,7 +13,24 @@ const getAppointments = async (req, res) => {
   }
 };
 
-const updateAppointment = async (req, res) => {
+const updateStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      id,
+      {  status },
+      { new: true }
+    );
+
+    res.status(200).send(appointment);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+
+const updateOperator = async (req, res) => {
   try {
     const { id } = req.params;
     const { loaderName } = req.body;
@@ -48,7 +65,7 @@ const createAppointment = async (req, res) => {
     const appointment = new Appointment(req.body);
 
     appointment.checkInNumber = checkInNumber;
-    appointment.status = "scheduled";
+    appointment.status = "Scheduled";
     appointment.checkInTime = null;
     appointment.checkOutTime = null;
     appointment.assignedDoor = null;
@@ -67,5 +84,6 @@ const createAppointment = async (req, res) => {
 module.exports = {
   getAppointments,
   createAppointment,
-  updateAppointment
+  updateOperator,
+  updateStatus
 };

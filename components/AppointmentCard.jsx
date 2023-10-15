@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { OPERATORS } from "../constants";
-import axios from 'axios'
+import axios from "axios";
 
 const AppointmentRow = ({ appointment }) => {
   // Define a state variable to manage the selected value in the Assign dropdown
@@ -10,13 +10,29 @@ const AppointmentRow = ({ appointment }) => {
   // Define a function to handle changes in the Assign dropdown
   const handleAssignChange = (event) => {
     setSelectedAssignee(event.target.value);
-    axios.put(`http://localhost:5000/api/appointments/${appointment._id}`, {loaderName: event.target.value}) 
+    axios.put(`http://localhost:5000/api/operator/${appointment._id}`, {
+      loaderName: event.target.value,
+    });
+  };
+
+  const handleAction = () => {
+    // Determine the action based on the appointment's status
+    if (appointment.status === "Loading") {
+      // If the status is "Loading," change it to "Complete"
+      axios.put(`http://localhost:5000/api/update-status/${appointment._id}`, {
+        status: "Complete",
+      });
+    } else {
+      // If the status is not "Loading," change it to "Loading"
+      axios.put(`http://localhost:5000/api/update-status/${appointment._id}`, {
+        status: "Loading",
+      });
+    }
   };
 
   return (
-    <div className="appointment-row flex flex-col border-2 border-starfield3s">
+    <div className="appointment-row flex flex-col border-2 border-starfield1">
       <div className="flex flex-row flex-wrap justify-between">
-        {" "}
         <div className="border border-starfield1 border-3 flex-wrap  flex  justify-around   text-starfield4">
           <div className="p-2 flex-1">Driver Name</div>
           <div className="p-2 flex-1">{appointment.driverName}</div>
@@ -68,6 +84,10 @@ const AppointmentRow = ({ appointment }) => {
           <div className="p-2 flex-1">{appointment.status}</div>
         </div>
       </div>
+      <div className="border border-starfield1 border-3 flex-wrap  flex  justify-around   text-starfield4">
+        <div className="p-2 flex-1">Status</div>
+        <div className="p-2 flex-1">{appointment.status}</div>
+      </div>
       <div className="flex flex-row">
         <select
           className="p-2"
@@ -75,7 +95,6 @@ const AppointmentRow = ({ appointment }) => {
           onChange={handleAssignChange}
         >
           <option value="">Select Assignee</option>
-          {/* Loop through the operators and create an option for each one */}
           {OPERATORS.map((operator) => (
             <option key={operator} value={operator}>
               {operator}
@@ -83,11 +102,13 @@ const AppointmentRow = ({ appointment }) => {
           ))}
         </select>
 
-        <button className="p-2 bg-starfield3 text-starfield5 rounded m-5">
-          Edit
-        </button>
-        <button className="p-2 bg-starfield4 text-starfield5 rounded m-5">
-          Complete
+        <button
+          className={`p-2 bg-starfield3 text-starfield5 rounded m-5 ${
+            appointment.status === "Loading" ? "bg-starfield4" : ""
+          }`}
+          onClick={handleAction}
+        >
+          {appointment.status === "Loading" ? "Complete" : "Loading"}
         </button>
         <button className="p-2 bg-starfield2 text-starfield5 rounded m-5">
           Cancel

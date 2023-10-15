@@ -10,7 +10,8 @@ router.get("/", routeController.getAppointments);
 
 router.post("/new-appointment", routeController.createAppointment);
 
-router.put("/appointments/:id", routeController.updateAppointment);
+router.put("/operator/:id", routeController.updateOperator);
+router.put("/update-status/:id", routeController.updateStatus);
 
 // Export router
 module.exports = router;
