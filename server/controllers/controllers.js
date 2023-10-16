@@ -70,8 +70,6 @@ const updateStatus = async (req, res) => {
 };
 
 const updateDoor = async (req, res) => {
-  console.log(req.body)
-  console.log(req.params)
   try {
     const { id } = req.params;
     const { assignedDoor } = req.body;

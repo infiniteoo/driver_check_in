@@ -15,7 +15,6 @@ const AppointmentRow = ({ appointment }) => {
   });
 
   const handleDoorChange = (event) => {
-    console.log(event.target.value)
     const newSelectedDoors = { ...selectedDoors };
     newSelectedDoors[appointment.assignedDoor] = event.target.value;
     setSelectedDoors(newSelectedDoors);
@@ -23,8 +22,7 @@ const AppointmentRow = ({ appointment }) => {
     axios.put(`http://localhost:5000/api/door/${appointment._id}`, {
       assignedDoor: event.target.value,
     });
-
-  }  
+  };
 
   const handleAssignChange = (event) => {
     const newSelectedAssignees = { ...selectedAssignees };
