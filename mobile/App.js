@@ -6,6 +6,7 @@ import EnterPONumber from "./components/EnterPONumber";
 import NameAndNumberInput from "./components/NameAndNumberInput";
 import CarrierAndTrailerInput from "./components/CarrierAndTrailerInput";
 import ConfirmDetails from "./components/ConfirmDetails";
+import FinalConfirmation from "./components/FinalConfirmation";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -35,7 +36,6 @@ export default function App() {
             setVerifiedAppointment={setVerifiedAppointment}
             signInData={signInData}
             setSignInData={setSignInData}
-
           />
         )}
         {step === 2 && (
@@ -58,6 +58,17 @@ export default function App() {
         )}
         {step === 4 && (
           <ConfirmDetails
+            poNumber={poNumber}
+            setPONumber={setPONumber}
+            setStep={setStep}
+            signInData={signInData}
+            setSignInData={setSignInData}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
+          />
+        )}
+        {step === 5 && (
+          <FinalConfirmation
             poNumber={poNumber}
             setPONumber={setPONumber}
             setStep={setStep}

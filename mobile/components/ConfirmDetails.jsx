@@ -20,10 +20,9 @@ const ConfirmDetails = ({
     );
 
     if (response.status === 200) {
-        
       setStep(5);
     } else {
-        alert("Something went wrong");
+      alert("Something went wrong");
     }
   };
 
