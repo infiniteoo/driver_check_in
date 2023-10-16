@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { OPERATORS } from "../constants";
+import { DOORS } from "../constants";
 import axios from "axios";
 import { generateAppointmentData } from "../utils";
 
@@ -9,6 +10,21 @@ const AppointmentRow = ({ appointment }) => {
   const [selectedAssignees, setSelectedAssignees] = useState({
     [appointment._id]: "",
   });
+  const [selectedDoors, setSelectedDoors] = useState({
+    [appointment._id]: "",
+  });
+
+  const handleDoorChange = (event) => {
+    console.log(event.target.value)
+    const newSelectedDoors = { ...selectedDoors };
+    newSelectedDoors[appointment.assignedDoor] = event.target.value;
+    setSelectedDoors(newSelectedDoors);
+
+    axios.put(`http://localhost:5000/api/door/${appointment._id}`, {
+      assignedDoor: event.target.value,
+    });
+
+  }  
 
   const handleAssignChange = (event) => {
     const newSelectedAssignees = { ...selectedAssignees };
@@ -62,6 +78,19 @@ const AppointmentRow = ({ appointment }) => {
               {OPERATORS.map((operator, operatorIndex) => (
                 <option key={operator} value={operator}>
                   {operator}
+                </option>
+              ))}
+            </select>
+            <select
+              className="p-2 bg-white rounded border border-starfield1" // Added border styling
+              value={selectedAssignees[appointment.assignedDoor]}
+              onChange={handleDoorChange}
+              style={{ height: "2.5rem" }} // Adjust the height to match the buttons
+            >
+              <option value="">Assign Door</option>
+              {DOORS.map((door, doorIndex) => (
+                <option key={door} value={door}>
+                  {door}
                 </option>
               ))}
             </select>

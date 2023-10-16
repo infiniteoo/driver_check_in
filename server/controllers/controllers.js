@@ -69,6 +69,25 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const updateDoor = async (req, res) => {
+  console.log(req.body)
+  console.log(req.params)
+  try {
+    const { id } = req.params;
+    const { assignedDoor } = req.body;
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      id,
+      { assignedDoor },
+      { new: true }
+    );
+
+    res.status(200).send(appointment);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
 const updateOperator = async (req, res) => {
   try {
     const { id } = req.params;
@@ -125,4 +144,5 @@ module.exports = {
   updateStatus,
   getAppointmentByPONumber,
   checkIn,
+  updateDoor,
 };
