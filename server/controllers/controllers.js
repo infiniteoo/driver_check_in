@@ -13,6 +13,23 @@ const getAppointments = async (req, res) => {
   }
 };
 
+const getAppointmentByPONumber = async (req, res) => {
+  try {
+    const { po } = req.params;
+    const appointments = await Appointment.find({
+      $or: [
+        { checkInNumber: po }, // Search for PO number in checkInNumber field
+        { purchaseOrderNumber: po },     // Search for PO number in poNumber field
+      ],
+    });
+
+    res.status(200).send(appointments);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
+
 const updateStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -20,7 +37,7 @@ const updateStatus = async (req, res) => {
 
     const appointment = await Appointment.findByIdAndUpdate(
       id,
-      {  status },
+      { status },
       { new: true }
     );
 
@@ -28,7 +45,7 @@ const updateStatus = async (req, res) => {
   } catch (err) {
     res.status(400).send(err.message);
   }
-}
+};
 
 const updateOperator = async (req, res) => {
   try {
@@ -37,7 +54,7 @@ const updateOperator = async (req, res) => {
 
     const appointment = await Appointment.findByIdAndUpdate(
       id,
-      {  loaderName },
+      { loaderName },
       { new: true }
     );
 
@@ -45,13 +62,13 @@ const updateOperator = async (req, res) => {
   } catch (err) {
     res.status(400).send(err.message);
   }
-}
+};
 
 const createAppointment = async (req, res) => {
   try {
     let checkInNumber;
     let isUnique = false;
-    
+
     // Keep generating a checkInNumber until a unique one is found
     while (!isUnique) {
       checkInNumber = generateCheckInNumber();
@@ -70,7 +87,6 @@ const createAppointment = async (req, res) => {
     appointment.checkOutTime = null;
     appointment.assignedDoor = null;
     appointment.loaderName = null;
-    
 
     await appointment.save();
     res.status(201).send(appointment);
@@ -79,11 +95,11 @@ const createAppointment = async (req, res) => {
   }
 };
 
-
 // Export your controller functions
 module.exports = {
   getAppointments,
   createAppointment,
   updateOperator,
-  updateStatus
+  updateStatus,
+  getAppointmentByPONumber,
 };

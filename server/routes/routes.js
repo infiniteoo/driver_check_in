@@ -9,6 +9,7 @@ router.post("/new-appointment", routeController.createAppointment);
 
 router.put("/operator/:id", routeController.updateOperator);
 router.put("/update-status/:id", routeController.updateStatus);
+router.get('/po/:po', routeController.getAppointmentByPONumber);
 
 
 module.exports = router;
