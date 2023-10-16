@@ -11,6 +11,7 @@ import FinalConfirmation from "./components/FinalConfirmation";
 export default function App() {
   const [step, setStep] = useState(1);
   const [poNumber, setPONumber] = useState("");
+  const [verifiedAppointment, setVerifiedAppointment] = useState({});
   const [signInData, setSignInData] = useState({
     name: "",
     trailer: "",
@@ -19,7 +20,6 @@ export default function App() {
     date: new Date(),
   });
 
-  const [verifiedAppointment, setVerifiedAppointment] = useState({});
 
   return (
     <ImageBackground

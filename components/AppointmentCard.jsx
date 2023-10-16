@@ -72,7 +72,11 @@ const AppointmentRow = ({ appointment }) => {
               onChange={handleAssignChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons
             >
-              <option value="">Select Assignee</option>
+              <option value={appointment.loaderName}>
+                {appointment.loaderName
+                  ? appointment.loaderName
+                  : "Select Assignee"}
+              </option>
               {OPERATORS.map((operator, operatorIndex) => (
                 <option key={operator} value={operator}>
                   {operator}
@@ -85,7 +89,12 @@ const AppointmentRow = ({ appointment }) => {
               onChange={handleDoorChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons
             >
-              <option value="">Assign Door</option>
+              <option value={appointment.assignedDoor}>
+                {" "}
+                {appointment.assignedDoor
+                  ? appointment.assignedDoor
+                  : "Select Door"}
+              </option>
               {DOORS.map((door, doorIndex) => (
                 <option key={door} value={door}>
                   {door}
@@ -99,7 +108,9 @@ const AppointmentRow = ({ appointment }) => {
               }`}
               onClick={handleAction}
             >
-              {appointment.status === "Loading" ? "Complete" : "Loading"}
+              {appointment.status === "Loading"
+                ? "Set Completed"
+                : "Start Loading"}
             </button>
             <button className="p-2 bg-starfield2 text-starfield5 rounded m-5">
               Cancel
