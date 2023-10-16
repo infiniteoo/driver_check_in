@@ -67,7 +67,7 @@ const AppointmentRow = ({ appointment }) => {
         {appointment.status !== "Complete" ? (
           <>
             <select
-              className="p-2 bg-white rounded " // Added border styling
+              className="p-2 bg-white rounded border-starfield3 border-2" // Added border styling
               value={selectedAssignees[appointment._id]}
               onChange={handleAssignChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons
@@ -84,7 +84,7 @@ const AppointmentRow = ({ appointment }) => {
               ))}
             </select>
             <select
-              className="p-2 bg-white rounded " // Added border styling
+              className="p-2 bg-white rounded ml-3 border-starfield3 border-2 " // Added border styling
               value={selectedAssignees[appointment.assignedDoor]}
               onChange={handleDoorChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons

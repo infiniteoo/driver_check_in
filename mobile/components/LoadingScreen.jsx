@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Image, Pressable } from "react-native";
 import { ClockLoader } from "react-spinners";
 
-const LoadingScreen  = ({
+const LoadingScreen = ({
   setStep,
   poNumber,
   setPONumber,
@@ -11,7 +11,7 @@ const LoadingScreen  = ({
   verifiedAppointment,
   setVerifiedAppointment,
 }) => {
-  const [readyToLoad, setReadyToLoad] = useState(false);
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
   useEffect(() => {
     const checkForCompletion = async () => {
@@ -20,13 +20,12 @@ const LoadingScreen  = ({
           `http://localhost:5000/api/po/${verifiedAppointment[0].purchaseOrderNumber}`
         );
         const data = await response.json();
-        console.log("returned data;", data);
 
-        if (data[0].status === "Completed") {
-          setReadyToLoad(true);
+        if (data[0].status === "Complete") {
+          setLoadingComplete(true);
         }
       } catch (error) {
-        console.error("Error while checking for dock door assignment:", error);
+        console.error("Error while checking for loading completion:", error);
       }
     };
 
@@ -40,7 +39,7 @@ const LoadingScreen  = ({
   }, []);
 
   const handleConfirm = async () => {
-    setStep(7);
+    setStep(1);
   };
 
   return (
@@ -61,33 +60,32 @@ const LoadingScreen  = ({
           borderRadius: "5px ",
         }}
       />
-      {!readyToLoad ? (
+      {!loadingComplete ? (
         <>
           <Text style={{ fontSize: 36, marginBottom: 20, fontWeight: "bold" }}>
-            You're checked in, {signInData.name}!
+            Now loading in door {verifiedAppointment[0].assignedDoor},{" "}
+            {signInData.name}!
           </Text>
 
           <Text style={{ fontSize: 24, marginBottom: 20, width: "90%" }}>
-            Please wait for an assigned dock door. For now, please park in the
-            staging area, set your refer to 34 degrees (continuous), and set
-            your tandems. When a door is assigned, please chock your tires, pull
-            your airhose, and open your trailer door.
+            Please wait for your loader, {verifiedAppointment[0].loaderName}, to
+            finish loading your trailer. A confirmation will appear when loading
+            is complete.
           </Text>
+
+         
         </>
       ) : (
         <>
           <Text style={{ fontSize: 36, marginBottom: 20, fontWeight: "bold" }}>
-            You're ready to be loaded, {signInData.name}!
+            Your trailer is now loaded, {signInData.name}!
           </Text>
           <Text style={{ fontSize: 24, marginBottom: 20 }}>
-            {verifiedAppointment[0].loaderName} has been assigned to your load.
+            Please proceed to the office window to receive your paperwork.
           </Text>
 
           <Text style={{ fontSize: 24, marginBottom: 20, width: "90%" }}>
-            Please back into dock door {verifiedAppointment[0].assignedDoor}. Please
-            open your trailer door, pull your airhose, chock your tires, and
-            wait for your loader, {verifiedAppointment[0].loaderName}, to begin
-            the loading sequence.
+            Thank you for joining us today! We hope to see you again soon!
           </Text>
         </>
       )}
@@ -99,7 +97,7 @@ const LoadingScreen  = ({
           width: 300,
         }}
       >
-        {readyToLoad ? (
+        {loadingComplete ? (
           <Pressable
             onPress={handleConfirm}
             color="darkgreen" // Change the color to a different one
@@ -115,7 +113,7 @@ const LoadingScreen  = ({
               color: "white",
             }}
           >
-            <Text style={{ color: "white", fontSize: 24 }}>Confirm</Text>
+            <Text style={{ color: "white", fontSize: 24 }}>Start Over</Text>
           </Pressable>
         ) : (
           <ClockLoader size="75px" />
@@ -125,4 +123,4 @@ const LoadingScreen  = ({
   );
 };
 
-export default LoadingScreen ;
+export default LoadingScreen;

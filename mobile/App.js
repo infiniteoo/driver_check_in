@@ -7,6 +7,7 @@ import NameAndNumberInput from "./components/NameAndNumberInput";
 import CarrierAndTrailerInput from "./components/CarrierAndTrailerInput";
 import ConfirmDetails from "./components/ConfirmDetails";
 import FinalConfirmation from "./components/FinalConfirmation";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -69,6 +70,17 @@ export default function App() {
         )}
         {step === 5 && (
           <FinalConfirmation
+            poNumber={poNumber}
+            setPONumber={setPONumber}
+            setStep={setStep}
+            signInData={signInData}
+            setSignInData={setSignInData}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
+          />
+        )}
+        {step === 6 && (
+          <LoadingScreen
             poNumber={poNumber}
             setPONumber={setPONumber}
             setStep={setStep}
