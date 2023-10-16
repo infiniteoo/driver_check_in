@@ -72,6 +72,9 @@ const appointmentSchema = new mongoose.Schema({
     enum: ["Scheduled", "Checked In", "Loading", "Completed", "Canceled"],
     default: "Scheduled",
   },
+  signInData: {
+    type: Object,
+  },
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

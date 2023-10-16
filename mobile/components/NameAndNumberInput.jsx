@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, Image, Pressable } from "react-native";
+import { View, Text, TextInput, Image, Pressable } from "react-native";
 
 const NameAndNumberInput = ({
   setStep,
@@ -7,6 +7,8 @@ const NameAndNumberInput = ({
   setPONumber,
   signInData,
   setSignInData,
+  verifiedAppointment,
+  setVerifiedAppointment,
 }) => {
   const [driverName, setDriverName] = useState("");
   const handleNext = () => {

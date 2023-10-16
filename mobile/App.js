@@ -5,6 +5,7 @@ import { useState } from "react";
 import EnterPONumber from "./components/EnterPONumber";
 import NameAndNumberInput from "./components/NameAndNumberInput";
 import CarrierAndTrailerInput from "./components/CarrierAndTrailerInput";
+import ConfirmDetails from "./components/ConfirmDetails";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -17,6 +18,8 @@ export default function App() {
     date: new Date(),
   });
 
+  const [verifiedAppointment, setVerifiedAppointment] = useState({});
+
   return (
     <ImageBackground
       source={{ uri: bg }} // Replace with your image URL
@@ -28,6 +31,11 @@ export default function App() {
             setStep={setStep}
             setPONumber={setPONumber}
             poNumber={poNumber}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
+            signInData={signInData}
+            setSignInData={setSignInData}
+
           />
         )}
         {step === 2 && (
@@ -35,6 +43,8 @@ export default function App() {
             setStep={setStep}
             signInData={signInData}
             setSignInData={setSignInData}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
           />
         )}
         {step === 3 && (
@@ -42,6 +52,19 @@ export default function App() {
             setStep={setStep}
             signInData={signInData}
             setSignInData={setSignInData}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
+          />
+        )}
+        {step === 4 && (
+          <ConfirmDetails
+            poNumber={poNumber}
+            setPONumber={setPONumber}
+            setStep={setStep}
+            signInData={signInData}
+            setSignInData={setSignInData}
+            verifiedAppointment={verifiedAppointment}
+            setVerifiedAppointment={setVerifiedAppointment}
           />
         )}
       </View>

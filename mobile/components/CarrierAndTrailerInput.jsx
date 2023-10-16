@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, Image, Pressable } from "react-native";
+import { View, Text, TextInput, Image, Pressable } from "react-native";
 
 const CarrierAndTrailerInput = ({
   setStep,
@@ -7,8 +7,9 @@ const CarrierAndTrailerInput = ({
   setPONumber,
   signInData,
   setSignInData,
+  verifiedAppointment,  
+  setVerifiedAppointment,
 }) => {
-  
   const handleNext = () => {
     // You can use the `poNumber` state here for further processing
     setStep(4);

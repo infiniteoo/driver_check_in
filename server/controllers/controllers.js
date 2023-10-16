@@ -13,22 +13,44 @@ const getAppointments = async (req, res) => {
   }
 };
 
+const checkIn = async (req, res) => {
+  try {
+    const { signInData, verifiedAppointment } = req.body;
+
+    let id = verifiedAppointment[0]._id;
+
+    const appointment = await Appointment.findOne({ _id: id });
+    console.log("FOUND: ", appointment);
+
+    appointment.checkInTime = new Date();
+    appointment.status = "Checked In";
+    appointment.signInData = signInData;
+
+    await appointment.save();
+    res.status(200).send(appointment);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+};
+
 const getAppointmentByPONumber = async (req, res) => {
   try {
+    console.log(req.params);
     const { po } = req.params;
-    const appointments = await Appointment.find({
+    const appointment = await Appointment.find({
       $or: [
         { checkInNumber: po }, // Search for PO number in checkInNumber field
-        { purchaseOrderNumber: po },     // Search for PO number in poNumber field
+        { purchaseOrderNumber: po }, // Search for PO number in poNumber field
       ],
     });
+    console.log(appointment);
 
-    res.status(200).send(appointments);
+    res.status(200).send(appointment);
   } catch (err) {
     res.status(400).send(err.message);
   }
 };
-
 
 const updateStatus = async (req, res) => {
   try {
@@ -102,4 +124,5 @@ module.exports = {
   updateOperator,
   updateStatus,
   getAppointmentByPONumber,
+  checkIn,
 };
