@@ -49,14 +49,14 @@ const AppointmentRow = ({ appointment }) => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="border border-starfield1 bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2"
+            className=" bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2"
           >
             <div className="font-semibold">{item.label}:&nbsp;</div>
             {"  "}
             <div className="font-bold text-starfield3">{item.value}</div>
           </div>
         ))}
-        <div className="border border-starfield1 bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2">
+        <div className=" bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2">
           <div className="font-semibold">Loader:&nbsp;</div>
           <div className="font-bold text-starfield3">
             {appointment.loaderName}
@@ -67,7 +67,7 @@ const AppointmentRow = ({ appointment }) => {
         {appointment.status !== "Complete" ? (
           <>
             <select
-              className="p-2 bg-white rounded border border-starfield1" // Added border styling
+              className="p-2 bg-white rounded " // Added border styling
               value={selectedAssignees[appointment._id]}
               onChange={handleAssignChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons
@@ -84,7 +84,7 @@ const AppointmentRow = ({ appointment }) => {
               ))}
             </select>
             <select
-              className="p-2 bg-white rounded border border-starfield1" // Added border styling
+              className="p-2 bg-white rounded " // Added border styling
               value={selectedAssignees[appointment.assignedDoor]}
               onChange={handleDoorChange}
               style={{ height: "2.5rem" }} // Adjust the height to match the buttons
