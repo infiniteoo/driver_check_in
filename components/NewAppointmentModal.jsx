@@ -1,10 +1,9 @@
 "use client";
 
-import axios from 'axios'
-
 import React, { useState, useEffect } from "react";
 import "./NewAppointmentModal.css";
 import { generateCheckInNumber, generatePurchaseOrderNumber } from "../utils";
+import supabase from "@/supabase";
 
 const NewAppointmentModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,11 +27,19 @@ const NewAppointmentModal = () => {
   };
 
   const handleSubmit = async () => {
-    let response = await axios.post("http://localhost:5000/api/new-appointment", form);
-    console.log(response)
-  }
+    // add form object to appointments table supabase
+    const { data, error } = await supabase
+      .from("appointments") // Replace with your actual table name
+      .insert(form)
+      .select();
 
-  
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.log(error);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -94,7 +101,7 @@ const NewAppointmentModal = () => {
                 <input
                   className="mt-2 border text-starfield2 p-2 w-full rounded"
                   type="tel"
-                  name="driverPhoneNumber" 
+                  name="driverPhoneNumber"
                   value={form.driverPhoneNumber}
                   onChange={handleInputChange}
                 />
@@ -107,7 +114,6 @@ const NewAppointmentModal = () => {
                   name="trailerNumber"
                   value={form.trailerNumber}
                   onChange={handleInputChange}
-
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -128,7 +134,6 @@ const NewAppointmentModal = () => {
                   name="bookerName"
                   value={form.bookerName}
                   onChange={handleInputChange}
-                  
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -139,7 +144,6 @@ const NewAppointmentModal = () => {
                   name="bookerPhoneNumber"
                   value={form.bookerPhoneNumber}
                   onChange={handleInputChange}
-
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -150,7 +154,6 @@ const NewAppointmentModal = () => {
                   name="bookerEmailAddress"
                   value={form.bookerEmailAddress}
                   onChange={handleInputChange}
-
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -161,7 +164,6 @@ const NewAppointmentModal = () => {
                   name="carrier"
                   value={form.carrier}
                   onChange={handleInputChange}
-
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -172,7 +174,6 @@ const NewAppointmentModal = () => {
                   name="purchaseOrderNumber"
                   value={form.purchaseOrderNumber}
                   onChange={handleInputChange}
-
                 />
               </label>
               <label className="block text-starfield4 font-bold">
@@ -183,7 +184,6 @@ const NewAppointmentModal = () => {
                   name="appointmentTime"
                   value={form.appointmentTime}
                   onChange={handleInputChange}
-
                 />
               </label>
 
@@ -195,7 +195,6 @@ const NewAppointmentModal = () => {
                   name="weight"
                   value={form.weight}
                   onChange={handleInputChange}
-
                 />
               </label>
             </div>
@@ -207,7 +206,10 @@ const NewAppointmentModal = () => {
               >
                 Cancel
               </button>
-              <button className="bg-starfield1 text-starfield5 hover:bg-starfield4 px-6 py-2 rounded" onClick={handleSubmit}>
+              <button
+                className="bg-starfield1 text-starfield5 hover:bg-starfield4 px-6 py-2 rounded"
+                onClick={handleSubmit}
+              >
                 Submit
               </button>
             </div>

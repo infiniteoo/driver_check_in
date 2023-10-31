@@ -72,8 +72,6 @@ const LoadingScreen = ({
             finish loading your trailer. A confirmation will appear when loading
             is complete.
           </Text>
-
-         
         </>
       ) : (
         <>

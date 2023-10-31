@@ -6,11 +6,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "nodemon server/server.js",
-    "client": "npm run dev",
-    "dev": "concurrently \"cd server && nodemon server.js\" \"next dev\""
+    
+   
+    "dev": "next dev"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
     "axios": "^1.5.1",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",

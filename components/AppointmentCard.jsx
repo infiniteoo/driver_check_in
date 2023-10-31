@@ -1,9 +1,10 @@
 "use client";
+import supabase from "../supabase";
 
 import React, { useState } from "react";
 import { OPERATORS } from "../constants";
 import { DOORS } from "../constants";
-import axios from "axios";
+
 import { generateAppointmentData } from "../utils";
 
 const AppointmentRow = ({ appointment }) => {
@@ -14,31 +15,46 @@ const AppointmentRow = ({ appointment }) => {
     [appointment._id]: "",
   });
 
-  const handleDoorChange = (event) => {
+  const handleDoorChange = async (event) => {
     const newSelectedDoors = { ...selectedDoors };
     newSelectedDoors[appointment.assignedDoor] = event.target.value;
     setSelectedDoors(newSelectedDoors);
 
-    axios.put(`http://localhost:5000/api/door/${appointment._id}`, {
-      assignedDoor: event.target.value,
-    });
+    const { data, error } = await supabase
+      .from("appointments") // Replace with your actual table name
+      .update({ assignedDoor: event.target.value })
+      .eq("id", appointment.id)
+      .select();
   };
 
-  const handleAssignChange = (event) => {
+  const handleAssignChange = async (event) => {
+    console.log("assignchange", event.target.value);
     const newSelectedAssignees = { ...selectedAssignees };
     newSelectedAssignees[appointment._id] = event.target.value;
     setSelectedAssignees(newSelectedAssignees);
 
-    axios.put(`http://localhost:5000/api/operator/${appointment._id}`, {
-      loaderName: event.target.value,
-    });
+    const { data, error } = await supabase
+      .from("appointments") // Replace with your actual table name
+      .update({ loaderName: event.target.value })
+      .eq("id", appointment.id)
+      .select();
+
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
-  const handleAction = () => {
+  const handleAction = async () => {
     const newStatus = appointment.status === "Loading" ? "Complete" : "Loading";
-    axios.put(`http://localhost:5000/api/update-status/${appointment._id}`, {
-      status: newStatus,
-    });
+
+    const { data, error } = await supabase
+      .from("appointments") // Replace with your actual table name
+      .update({ status: newStatus })
+      .eq("id", appointment.id)
+      .select();
   };
 
   const data = generateAppointmentData(appointment);

@@ -21,7 +21,6 @@ export default function App() {
     date: new Date(),
   });
 
-
   return (
     <ImageBackground
       source={{ uri: bg }} // Replace with your image URL
