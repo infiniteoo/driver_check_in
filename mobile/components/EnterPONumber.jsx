@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import supabase from "@/supabase";
 import { View, Text, TextInput, Image, Pressable } from "react-native";
 
 const EnterPONumber = ({
@@ -12,13 +12,15 @@ const EnterPONumber = ({
 }) => {
   const handleNext = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/po/${poNumber}`
-      );
+      const { data, error } = await supabase
+        .from("appointments") // Replace with your actual table name
+        .select()
+        .eq("purchaseOrderNumber", poNumber);
 
-      console.log("RESPONSE: ", response.data);
-      if (response.data.length > 0) {
-        setVerifiedAppointment(response.data);
+      if (error) {
+        console.log("ERROR: ", error);
+      } else if (data && data.length > 0) {
+        setVerifiedAppointment(data);
         setStep(2);
       } else {
         alert("PO Number not found");

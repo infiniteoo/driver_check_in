@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import supabase from "../../supabase";
 import { View, Text, TextInput, Image, Pressable } from "react-native";
 
 const ConfirmDetails = ({
@@ -12,17 +12,26 @@ const ConfirmDetails = ({
   setSignInData,
 }) => {
   const handleConfirm = async () => {
-    const combinedData = { signInData, verifiedAppointment };
+    try {
+      const combinedData = {
+        signInData,
+        checkInTime: new Date(),
+        status: "Checked In",
+      };
 
-    const response = await axios.put(
-      "http://localhost:5000/api/check-in/",
-      combinedData
-    );
+      // Update the database record with the combined data
+      const { data, error } = await supabase
+        .from("appointments")
+        .eq("id", verifiedAppointment.id)
+        .update(combinedData);
 
-    if (response.status === 200) {
-      setStep(5);
-    } else {
-      alert("Something went wrong");
+      if (error) {
+        console.log("ERROR: ", error);
+      } else {
+        setStep(5);
+      }
+    } catch (error) {
+      console.log("ERROR: ", error);
     }
   };
 
