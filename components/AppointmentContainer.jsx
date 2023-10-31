@@ -1,14 +1,24 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import AppointmentRow from "./AppointmentCard";
 import "./Appointments.css";
 
 const AppointmentContainer = ({ data }) => {
+  const [appointments, setAppointments] = useState([data]);
+
+  useEffect(() => {
+    setAppointments(data);
+  }, [appointments]);
+
   return (
     <div className="appointments-container mt-4">
-      {data.map((appointment) => (
+      {appointments.map((appointment, index) => (
         <AppointmentRow
-          key={appointment.checkInNumber}
+          key={index}
           appointment={appointment}
+          setAppointments={setAppointments}
+          appointments={appointments}
         />
       ))}
     </div>

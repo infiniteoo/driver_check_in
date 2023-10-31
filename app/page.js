@@ -8,7 +8,6 @@ export default async function Home() {
     .order("id", { ascending: false });
 
   if (data) {
-    console.log(data);
   }
 
   if (error) {

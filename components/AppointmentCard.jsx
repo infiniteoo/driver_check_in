@@ -1,18 +1,18 @@
 "use client";
-import supabase from "../supabase";
 
+import supabase from "../supabase";
 import React, { useState } from "react";
 import { OPERATORS } from "../constants";
 import { DOORS } from "../constants";
 
 import { generateAppointmentData } from "../utils";
 
-const AppointmentRow = ({ appointment }) => {
+const AppointmentRow = ({ appointment, setAppointments, appointments }) => {
   const [selectedAssignees, setSelectedAssignees] = useState({
-    [appointment._id]: "",
+    [appointment.id]: "",
   });
   const [selectedDoors, setSelectedDoors] = useState({
-    [appointment._id]: "",
+    [appointment.id]: "",
   });
 
   const handleDoorChange = async (event) => {
@@ -25,6 +25,19 @@ const AppointmentRow = ({ appointment }) => {
       .update({ assignedDoor: event.target.value })
       .eq("id", appointment.id)
       .select();
+
+    if (data) {
+      // update setAppointments
+      const newAppointments = [...appointments];
+      const appointmentIndex = newAppointments.findIndex(
+        (appt) => appt.id === appointment.id
+      );
+      newAppointments[appointmentIndex].assignedDoor = event.target.value;
+      setAppointments(newAppointments);
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
   const handleAssignChange = async (event) => {
@@ -41,6 +54,13 @@ const AppointmentRow = ({ appointment }) => {
 
     if (data) {
       console.log(data);
+      // update setAppointments
+      const newAppointments = [...appointments];
+      const appointmentIndex = newAppointments.findIndex(
+        (appt) => appt.id === appointment.id
+      );
+      newAppointments[appointmentIndex].loaderName = event.target.value;
+      setAppointments(newAppointments);
     }
     if (error) {
       console.log(error);
@@ -55,14 +75,27 @@ const AppointmentRow = ({ appointment }) => {
       .update({ status: newStatus })
       .eq("id", appointment.id)
       .select();
+
+    if (data) {
+      // update setAppointments
+      const newAppointments = [...appointments];
+      const appointmentIndex = newAppointments.findIndex(
+        (appt) => appt.id === appointment.id
+      );
+      newAppointments[appointmentIndex].status = newStatus;
+      setAppointments(newAppointments);
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
-  const data = generateAppointmentData(appointment);
+  const aptData = generateAppointmentData(appointment);
 
   return (
     <div className="appointment-row flex flex-col border-2 border-starfield1 rounded p-4 my-4">
       <div className="flex flex-row flex-wrap justify-between">
-        {data.map((item, index) => (
+        {aptData.map((item, index) => (
           <div
             key={index}
             className=" bg-white border-3 flex-wrap flex justify-around text-starfield4 p-2"
